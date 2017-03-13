@@ -1,0 +1,16 @@
+version: 2.0
+jobs:
+  build:
+    docker:
+      - image: openjdk:8
+        environment:
+          LEIN_FAST_TRAMPOLINE: yes
+    steps:
+      - checkout
+      - restore_cache:
+          key: 
+      - run: lein deps
+      - save_cache:
+          key:
+      - run: lein do test, uberjar
+      - store_artifacts:
