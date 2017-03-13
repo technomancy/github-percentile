@@ -3,8 +3,8 @@
         [compojure.route :only [resources]]
         [ring.adapter.jetty :only [run-jetty]]
         [ring.middleware.params :only [wrap-params]]
-        [hiccup.page-helpers :only [html5 doctype include-css]]
-        [hiccup.form-helpers :only [form-to label text-field submit-button]])
+        [hiccup.page :only [html5 doctype include-css]]
+        [hiccup.form :only [form-to label text-field submit-button]])
   (:require [clojure.java.io :as io]
             [clojure.string :as s]
             [tentacles.orgs :as orgs]
@@ -85,7 +85,8 @@
     {:status 200 :headers {"Content-Type" "application/json"}
      :body (str "{"
                 (s/join ", "
-                        (for [[k v] {:user who :org org :percentile (percentile who org)}]
+                        (for [[k v] {:user who :org org
+                                     :percentile (percentile who org)}]
                           (format "\"%s\": %s" (name k) (pr-str v))))
                 "}")})
   (GET "/rank/:org" [org]
